@@ -1,32 +1,15 @@
-const mysql = require('mysql2')
+const mysql = require('mysql2');
 
-module.exports = mysql
+// Criação do pool de conexões
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'gabriel',
+    password: 'Gabriel#12345!',
+    database: 'portfolio',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
 
-
-const connection = mysql.createConnection({
-    host: 'localhost',      // Endereço do banco
-    user: 'gabriel',           // Usuário do banco de dados
-    password: 'Gabriel#12345!',  // Senha do usuário
-    database: 'weathermeter' // Nome do banco de dados
-  });
-
-  // Conectar ao MySQL
-connection.connect((err) => {
-    if (err) {
-      console.error('Erro ao conectar ao MySQL:', err.message);
-      return;
-    }
-    console.log('Conectado ao MySQL com sucesso!');
-  })
-
-  // Conecta ao banco de dados
-connection.connect(err => {
-    if (err) {
-      console.error('Erro ao conectar ao banco de dados:', err);
-      return;
-    }
-    console.log('Conectado ao banco de dados MySQL!');
-  });
-
-
-  
+// Exportar o pool
+module.exports = pool.promise(); // Usando o método promise para facilitar o uso de async/await
